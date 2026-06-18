@@ -1,0 +1,6 @@
+# Copy to the EC2 host, e.g. /etc/caddy/Caddyfile
+# Replace api.example.com with your domain. DNS A record must point to this server.
+
+api.example.com {
+	reverse_proxy localhost:3000
+}
