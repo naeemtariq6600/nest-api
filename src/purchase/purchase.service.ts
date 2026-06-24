@@ -19,6 +19,7 @@ export class PurchaseService {
 
   async create(userId: number, data: CreatePurchaseDto): Promise<Purchase> {
     const purchase = this.purchaseRepository.create({
+      item_name: data.item_name,
       purchase_date: data.purchase_date,
       purchase_amount: data.purchase_amount,
       sale_amount: data.sale_amount,
@@ -151,6 +152,10 @@ export class PurchaseService {
     data: UpdatePurchaseDto,
   ): Promise<Purchase> {
     const purchase = await this.findOne(userId, id);
+
+    if (data.item_name !== undefined) {
+      purchase.item_name = data.item_name;
+    }
 
     if (data.purchase_date !== undefined) {
       purchase.purchase_date = data.purchase_date;

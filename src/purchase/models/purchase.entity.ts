@@ -22,6 +22,9 @@ export class Purchase {
   @RelationId((purchase: Purchase) => purchase.user)
   user_id: number;
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  item_name: string | null;
+
   @Column({ type: 'date' })
   purchase_date: string;
 
