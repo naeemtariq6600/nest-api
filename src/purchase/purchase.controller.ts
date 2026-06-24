@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { CurrentUser } from '../auth/current-user.decorator';
@@ -32,6 +33,49 @@ export class PurchaseController {
   @Get()
   findAll(@CurrentUser('sub') userId: number): Promise<Purchase[]> {
     return this.purchaseService.findAll(userId);
+  }
+
+  @Get('reports/today')
+  todayReport(
+    @CurrentUser('sub') userId: number,
+  ): Promise<{ total_purchase: number; total_profit: number }> {
+    return this.purchaseService.todayReport(userId);
+  }
+
+  @Get('reports/current-month')
+  currentMonthReport(
+    @CurrentUser('sub') userId: number,
+  ): Promise<{ total_purchase: number; total_profit: number }> {
+    return this.purchaseService.currentMonthReport(userId);
+  }
+
+  @Get('reports/date-wise')
+  dateWiseReport(
+    @CurrentUser('sub') userId: number,
+    @Query('start_date') startDate: string,
+    @Query('end_date') endDate: string,
+  ): Promise<{ date: string; total_purchase: number; total_profit: number }[]> {
+    return this.purchaseService.dateWiseReport(userId, startDate, endDate);
+  }
+
+  @Get('reports/list')
+  findByDateRange(
+    @CurrentUser('sub') userId: number,
+    @Query('start_date') startDate: string,
+    @Query('end_date') endDate: string,
+  ): Promise<Purchase[]> {
+    return this.purchaseService.findByDateRange(userId, startDate, endDate);
+  }
+
+  @Get('reports/month-wise')
+  monthWiseReport(
+    @CurrentUser('sub') userId: number,
+    @Query('start_month') startMonth: string,
+    @Query('end_month') endMonth: string,
+  ): Promise<
+    { month: string; total_purchase: number; total_profit: number }[]
+  > {
+    return this.purchaseService.monthWiseReport(userId, startMonth, endMonth);
   }
 
   @Get(':id')
