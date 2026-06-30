@@ -7,7 +7,6 @@ import { JwtAuthGuard } from './jwt-auth.guard';
   imports: [
     JwtModule.register({
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: jwtConstants.expiresIn },
     }),
   ],
   providers: [JwtAuthGuard],
