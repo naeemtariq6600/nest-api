@@ -1,8 +1,6 @@
 services:
   backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.prod
+    image: ${BACKEND_IMAGE}
     restart: always
     env_file:
       - .env
