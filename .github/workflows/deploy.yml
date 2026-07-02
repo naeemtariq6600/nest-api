@@ -64,6 +64,9 @@ jobs:
             git pull --ff-only origin main
             export BACKEND_IMAGE=${{ env.IMAGE_NAME }}:latest
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+            docker container prune -f
+            docker image prune -af
+            docker builder prune -af
             docker compose -f docker-compose.prod.yml pull backend
             docker compose -f docker-compose.prod.yml up -d
             docker compose -f docker-compose.prod.yml exec -T backend npm run migration:run
